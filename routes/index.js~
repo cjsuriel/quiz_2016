@@ -58,11 +58,6 @@ router.delete('/quizzes/:quizId(\\d+)',    	sessionController.loginRequired,
 											quizController.ownershipRequired, 
 											quizController.destroy);
 
-//Definición de ruta de /author
-router.get('/author', function(req, res, next) {
-  res.render('author');
-});
-
 // Definición de rutas de comentarios
 router.get('/quizzes/:quizId(\\d+)/comments/new',  sessionController.loginRequired, 
 	                                               commentController.new);
