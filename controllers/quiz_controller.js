@@ -35,9 +35,41 @@ exports.ownershipRequired = function(req, res, next){
 
 // GET /quizzes
 exports.index = function(req, res, next) {
-		var buscar = req.query.search || "";
+	
+	var buscar = req.query.search || "";
+	var formato = req.params.format || "";
+	
+	if (formato === "json" || formato==="JSON"){
+		//AQUI MANDAR OBJETOS JSON
+		if (buscar) {
+			buscar= buscar.replace(' ', '%');
+     			models.Quiz.findAll({order: 'question ASC', where: {question: {$like: '%'+buscar+'%'}}})//////ARREGLAR TODO ESTO
+			.then(function(quizzes) {
+
+			//res.json('quizzes/index.ejs', { quizzes: quizzes});
+			res.status(200).json({ quizzes: quizzes});
+
+		})
+		.catch(function(error) {
+			next(error);
+		});
+		} else {
+
+		models.Quiz.findAll()
+			.then(function(quizzes) {
+
+				//res.json('quizzes/index.ejs', { quizzes: quizzes});
+
+				res.status(200).json( { quizzes: quizzes});
+
+		})
+		.catch(function(error) {
+			next(error);
+		});
+	}
 
 
+	} else {
 		if (buscar) {
 			buscar= buscar.replace(' ', '%');
      			models.Quiz.findAll({order: 'question ASC', where: {question: {$like: '%'+buscar+'%'}}})//////ARREGLAR TODO ESTO
@@ -58,6 +90,8 @@ exports.index = function(req, res, next) {
 			});
 		}
 
+	}
+
 };
 
 
@@ -65,9 +99,11 @@ exports.index = function(req, res, next) {
 exports.show = function(req, res, next) {
 
 	var answer = req.query.answer || '';
-
-	res.render('quizzes/show', {quiz: req.quiz,
-								answer: answer});
+	var formato = req.params.format || "";
+	if (formato === "json" || formato==="JSON"){
+		res.json( {quiz: req.quiz, answer: answer});
+	} else {
+		res.render('quizzes/show', {quiz: req.quiz, answer: answer});}
 };
 
 
