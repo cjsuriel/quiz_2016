@@ -1,14 +1,4 @@
-<div>
-<p>
- Buscar pregunta: 
-</p>
-<p>
-<form method="get" action="/quizzes" > 
-	<input type="text" name="search" placeholder="Introducir búsqueda" /> 
-<input type="submit" value="Buscar">
-</div>
 
-<div>
 <table>
   <% for (var i in quizzes) { %>        
      <tr>
@@ -39,4 +29,3 @@
 <% if (session.user) { %>
   <a href="/quizzes/new"><button type="button">Crear pregunta</button></a>
 <% } %>
-</div>
