@@ -118,7 +118,7 @@ exports.create = function(req, res, next) {
     var login     = req.body.login;
     var password  = req.body.password;
 
-    var fecha = new Date();
+    var fecha = new date();
     var tiempo = fecha.getTime();
 
     authenticate(login, password)
