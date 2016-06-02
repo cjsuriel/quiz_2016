@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
   var fecha = new Date();
   if(!(req.session.user)){
     next();
-  }else if (fecha.getTime() - (req.session.user).tiempo > 5000){
+  }else if (fecha.getTime() - (req.session.user).tiempo > 120000){
     delete req.session.user;
     next();
   }else{
